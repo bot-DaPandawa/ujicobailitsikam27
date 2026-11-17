@@ -1,27 +1,22 @@
+
 const SALT = "ILITS_IKAMADIRI_2026_SECRET";
 
-// SHA-256 murni JS (Aman jalan baik di file:/// lokal maupun HTTPS)
-function sha256(ascii) {
-  function rightRotate(value, amount) {
-    return (value >>> amount) | (value << (32 - amount));
+function hashNRP(nrp) {
+  const str = `${SALT}:${nrp}`;
+  let h1 = 0x811c9dc5, h2 = 0x1b873593, h3 = 0x85ebca6b, h4 = 0xc2b2ae35;
+  for (let i = 0; i < str.length; i++) {
+    const ch = str.charCodeAt(i);
+    h1 = Math.imul(h1 ^ ch, 0x01000193);
+    h2 = Math.imul(h2 ^ (ch + i), 0x85ebca6b);
+    h3 = Math.imul(h3 ^ (ch * 31), 0xc2b2ae35);
+    h4 = Math.imul(h4 ^ (ch ^ 0x5a), 0x27d4eb2f);
   }
-  const mathPow = Math.pow;
-  const maxWord = mathPow(2, 32);
-  let result = "";
-  const words = [];
-  const asciiBitLength = ascii.length * 8;
-  const hash = (sha256.h = sha256.h || []);
-  const k = (sha256.k = sha256.k || []);
-  let primeCounter = k.length;
-  const isComposite = {};
-
-  for (let candidate = 2; primeCounter < 64; candidate++) {
-    if (!isComposite[candidate]) {
-      for (let i = 0; i < 313; i += candidate) isComposite[i] = candidate;
-      hash[primeCounter] = (mathPow(candidate, 0.5) * maxWord) | 0;
-      k[primeCounter++] = (mathPow(candidate, 1 / 3) * maxWord) | 0;
-    }
-  }
+  return [h1, h2, h3, h4]
+    .map((h) => (h >>> 0).toString(16).padStart(8, "0"))
+    .join("");
+}
+  const hash = sha256.h.slice(0);
+  const k = sha256.k;
 
   ascii += "\x80";
   while ((ascii.length % 64) - 56) ascii += "\x00";
@@ -143,7 +138,7 @@ searchForm.addEventListener("submit", async (e) => {
   }
 
   if (typeof ENCRYPTED_LOLOS === "undefined" || typeof ENCRYPTED_TIDAK_LOLOS === "undefined") {
-    showError("File data-lolos.js atau data-tidak-lolos.js belum terbaca. Pastikan nama file sudah sesuai.");
+    showError("File data-lolos.js atau data-tidak-lolos.js belum terbaca. Cek kembali nama file atau isi kodenya.");
     return;
   }
 
@@ -171,8 +166,7 @@ searchForm.addEventListener("submit", async (e) => {
       showError("NRP tidak ditemukan. Periksa kembali angka yang kamu masukkan.");
     }
   } catch (err) {
-    console.error(err);
-    showError("Terjadi kesalahan saat memproses data: " + err.message);
+    showError("Terjadi kesalahan: " + err.message);
   } finally {
     setLoading(false);
   }

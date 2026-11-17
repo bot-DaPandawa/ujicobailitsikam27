@@ -1,7 +1,5 @@
-// ==========================================
 // FILE KHUSUS PESERTA LOLOS (Total: 2)
-// ==========================================
 const ENCRYPTED_LOLOS = {
-  "000383a00ef2fd6be32c0f6c1bb7a359ef99f1802dcddbb0cd63bc3c3844348e": "cB4HHRkDBx5VHEhIBQ0cAAZHAh4dDB0YBg0eDhoZAg0VBBkXAE0bBg8fQ1cXCRgGDRwAHQcCGwdCDwYDGQYd",
-  "d3464b1e39d198a9f869c923e847fd5fd6a82d166865e8bbef1ab3d95a6997a5": "cB4HHRkDBx5VHE1AAgcNTRQNHwYBBg4UEx0YAA5VCR0dARhHEx0YDxwcQx1fCh4AFREHGB4cAw1XHx4AFREHGA4cQx0fAA8c"
+  "62291ec89c004d744a17f86a598a919eefd27400216773ff21d5339821291e03": "Mm4iNSc+Aj4vLihmc3BkfU8=",
+  "0c73380eca0fc29f2eeac60a6baca58f5d6660884a19303c309f6bdccad10ebc": "Mm4iNSc+Aj4vLihmc3BkfU8="
 };
